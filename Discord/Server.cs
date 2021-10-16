@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Speedrun_BOT
+namespace Iswenzz.SR.Discord
 {
     public class Server
     {

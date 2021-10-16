@@ -7,7 +7,7 @@ using Discord.WebSocket;
 using Discord.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Speedrun_BOT
+namespace Iswenzz.SR.Discord
 {
     public class Program
     {

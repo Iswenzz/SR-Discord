@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Speedrun_BOT
+namespace Iswenzz.SR.Discord
 {
     class MapTimes
     {

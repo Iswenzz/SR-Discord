@@ -3,7 +3,7 @@ using Discord.Commands;
 using System;
 using System.Threading.Tasks;
 
-namespace Speedrun_BOT
+namespace Iswenzz.SR.Discord
 {
     /// <summary>
     /// Contains all bot commands callback.
