@@ -5,7 +5,8 @@
 [![CodeCov](https://img.shields.io/codecov/c/github/Iswenzz/SR-Discord?label=codecov&logo=codecov)](https://codecov.io/gh/Iswenzz/SR-Discord)
 [![License](https://img.shields.io/github/license/Iswenzz/SR-Discord?color=blue&logo=gitbook&logoColor=white)](https://github.com/Iswenzz/SR-Discord/blob/master/LICENSE)
 
-The SR Discord bot lets users within the discord server to see the top 30 ranks and times for a specified map and route. This bot was created for the sole purpose of convienience for the users; Being able to view map times without having to launch the game was an aspect that I wanted to provide for players who want to keep track of world records. 
+The SR Discord bot lets users within the discord server to see the top 30 ranks and times for a specified map and route. 
+This bot was created for the sole purpose of convienience for the users; Being able to view map times without having to launch the game was an aspect that I wanted to provide for players who want to keep track of world records. 
 
 ![](https://i.imgur.com/vFeTvnX.png)
 
