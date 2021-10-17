@@ -1,10 +1,13 @@
 ﻿using Discord;
+using Discord.Commands;
+
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
-namespace Iswenzz.SR.Discord
+namespace Iswenzz.SR.Discord.Commands
 {
-    class MapTimes
+    class MapTimes : ModuleBase
     {
         /// <summary>
         /// Send a specific sr leaderboard.
@@ -13,7 +16,8 @@ namespace Iswenzz.SR.Discord
         /// <param name="speed">Player speed (i.e: 210)</param>
         /// <param name="way">Way id (i.e: ns0)</param>
         /// <returns></returns>
-        public EmbedBuilder SendTimes(string map, string speed, string way)
+        [Command("times")]
+        public async Task SendTimes(string map, string speed, string way)
         {
             string text = "";
             string timeFolder = "/home/cod4/mods/adr_speedrun/map_times/";
@@ -41,7 +45,7 @@ namespace Iswenzz.SR.Discord
             }
 
             em.Build();
-            return em;
+            await Context.Channel.SendMessageAsync("", false, em);
         }
 
         /// <summary>

@@ -1,19 +1,30 @@
 ﻿using Discord;
+using Discord.Commands;
+
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-namespace Iswenzz.SR.Discord
+namespace Iswenzz.SR.Discord.Commands
 {
-    public class Server
+    public class Server : ModuleBase
     {
         private Dictionary<string, string> Info { get; set; } = new Dictionary<string, string>();
         private List<QueryPlayer> Players { get; set; } = new List<QueryPlayer>();
 
         public readonly byte[] PACKET_HEADER = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF };
+
+        /// <summary>
+        /// Query Sr- Speedrun server information.
+        /// </summary>
+        /// <returns></returns>
+        [Command("speedrun")]
+        public async Task Speedrun() =>
+            await Context.Channel.SendMessageAsync("", false, Query("213.32.18.205", 28960));
 
         /// <summary>
         /// Query server informations.
