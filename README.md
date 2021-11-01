@@ -21,7 +21,8 @@ Show the current map and players connected in SR Speedrun:
 ```
 
 ## Building
-1. [Visual Studio](https://visualstudio.microsoft.com/)
+_Pre-Requisites:_
+1. [Visual Studio](https://visualstudio.microsoft.com/) or [Dotnet SDK](https://dotnet.microsoft.com/download)
 
 ### [Download](https://github.com/Iswenzz/Speedrun-Discord-BOT/releases)
 
