@@ -1,6 +1,6 @@
 # SR Discord
 
-[![Checks](https://img.shields.io/github/checks-status/Iswenzz/SR-Discord/master?logo=github)](https://github.com/Iswenzz/SR-Discord/actions)
+[![Checks](https://img.shields.io/github/check-runs/Iswenzz/SR-Discord/master?logo=github)](https://github.com/Iswenzz/SR-Discord/actions)
 [![CodeFactor](https://img.shields.io/codefactor/grade/github/Iswenzz/SR-Discord?label=codefactor&logo=codefactor)](https://www.codefactor.io/repository/github/iswenzz/SR-Discord)
 [![CodeCov](https://img.shields.io/codecov/c/github/Iswenzz/SR-Discord?label=codecov&logo=codecov)](https://codecov.io/gh/Iswenzz/SR-Discord)
 [![License](https://img.shields.io/github/license/Iswenzz/SR-Discord?color=blue&logo=gitbook&logoColor=white)](https://github.com/Iswenzz/SR-Discord/blob/master/LICENSE)
