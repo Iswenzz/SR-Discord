@@ -1,6 +1,4 @@
-obj/*
-bin/*
-
-opencoverCoverage.xml
-mp_deathrun_epicfail_fastesttimes_ns0_190.txt
-COVERAGE.sh
+.vs
+.token
+obj
+bin

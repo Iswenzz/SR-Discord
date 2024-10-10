@@ -1,78 +1,90 @@
-﻿using Discord;
-using Discord.WebSocket;
-using Discord.Commands;
-
-using System;
-using System.Threading.Tasks;
-using System.Reflection;
+﻿using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Discord;
+using Discord.Interactions;
+using Discord.WebSocket;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Iswenzz.SR.Discord
+namespace SR.Discord
 {
-    public class Program
+    /// <summary>
+    /// The application.
+    /// </summary>
+    public static class Program
     {
-        private CommandService Commands { get; set; }
-        private DiscordSocketClient Client { get; set; }
-        private IServiceProvider Services { get; set; }
-
-        public static void Main() => new Program().Start().GetAwaiter().GetResult();
+        private static ServiceProvider ServiceProvider { get; set; }
 
         /// <summary>
-        /// Start the discord BOT.
+        /// Start the discord bot.
         /// </summary>
-        /// <returns></returns>
-        public async Task Start()
+        public static async Task Main()
         {
-            Client = new DiscordSocketClient();
-            Commands = new CommandService();
-            Services = new ServiceCollection().BuildServiceProvider();
-            string token_path = AppContext.BaseDirectory + "token";
+            string token = AppContext.BaseDirectory + ".token";
 
-            if (!File.Exists(token_path))
-                throw new FileNotFoundException($"File '{token_path}' is missing.");
+            if (!File.Exists(token))
+                throw new FileNotFoundException($"File '{token}' is missing.");
 
-            await InstallCommands();
-            await Client.LoginAsync(TokenType.Bot, File.ReadAllText(token_path));
-            await Client.StartAsync();
+            var config = new DiscordSocketConfig()
+            {
+                GatewayIntents = GatewayIntents.GuildMessages,
+                AlwaysDownloadUsers = true,
+            };
 
-            Console.WriteLine("Speedrun BOT - Started");
+            ServiceProvider = new ServiceCollection()
+               .AddSingleton(config)
+               .AddSingleton<DiscordSocketClient>()
+               .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()))
+               .BuildServiceProvider();
 
-            await Task.Delay(-1);
+            var client = ServiceProvider.GetRequiredService<DiscordSocketClient>();
+            var interactionService = ServiceProvider.GetRequiredService<InteractionService>();
+
+            client.Ready += OnReady;
+            client.InteractionCreated += OnInteraction;
+            client.Log += OnLog;
+
+            await client.LoginAsync(TokenType.Bot, File.ReadAllText(token));
+            await client.StartAsync();
+            await interactionService.AddModulesAsync(typeof(Program).Assembly, ServiceProvider);
+
+            await Task.Delay(Timeout.Infinite);
         }
 
         /// <summary>
-        /// Setup commands callback.
+        /// Ready callback.
         /// </summary>
         /// <returns></returns>
-        private async Task InstallCommands()
+        private static async Task OnReady()
         {
-            Client.MessageReceived += HandleCommand;
-            await Commands.AddModulesAsync(Assembly.GetEntryAssembly());
+            await ServiceProvider.GetRequiredService<InteractionService>().RegisterCommandsGloballyAsync();
         }
 
         /// <summary>
-        /// Commands callback (process user messages).
+        /// On socket interaction.
         /// </summary>
-        /// <param name="messageParam">Message from user.</param>
+        /// <param name="interaction">The interaction.</param>
         /// <returns></returns>
-        private async Task HandleCommand(SocketMessage messageParam)
+        private static async Task OnInteraction(SocketInteraction interaction)
         {
-            int argPos = 0;
-            SocketUserMessage message = messageParam as SocketUserMessage;
+            var interactionService = ServiceProvider.GetRequiredService<InteractionService>();
+            var client = ServiceProvider.GetRequiredService<DiscordSocketClient>();
+            var ctx = new SocketInteractionContext(client, interaction);
+            await interactionService.ExecuteCommandAsync(ctx, ServiceProvider);
+        }
 
-            if (message == null || message.Channel.Id != 335742969753632788)
-                return;
-
-            if (!(message.HasCharPrefix('!', ref argPos) || message.HasMentionPrefix(Client.CurrentUser, ref argPos)))
-                return;
-
-            CommandContext context = new CommandContext(Client, message);
-            IResult result = await Commands.ExecuteAsync(context, argPos, Services);
-
-            if (!result.IsSuccess)
-                await context.Channel.SendMessageAsync(result.ErrorReason);
+        /// <summary>
+        /// Log callback.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
+        private static Task OnLog(LogMessage message)
+        {
+            Console.WriteLine(message.ToString());
+            return Task.CompletedTask;
         }
     }
 }

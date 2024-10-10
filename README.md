@@ -11,20 +11,18 @@ This bot was created for the sole purpose of convienience for the users; Being a
 ![](https://i.imgur.com/vFeTvnX.png)
 
 ## Commands
-```text
-Show map times:
-!times <map name> <speed> <way>
-Show personal best:
-!pb <discord @name>
-Show the current map and players connected in SR Speedrun:
+```sh
+!times <map> <mode> <way>
 !speedrun
+!deathrun
+!battleroyale
 ```
 
 ## Building
 _Pre-Requisites:_
 1. [Visual Studio](https://visualstudio.microsoft.com/) or [Dotnet SDK](https://dotnet.microsoft.com/download)
 
-### [Download](https://github.com/Iswenzz/Speedrun-Discord-BOT/releases)
+### [Download](https://github.com/Iswenzz/SR-Discord/releases)
 
 ## Contributors:
 ***Note:*** If you would like to contribute to this repository, feel free to send a pull request, and I will review your code. Also feel free to post about any problems that may arise in the issues section of the repository.
